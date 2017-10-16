@@ -26,6 +26,27 @@ Protected Class JSON
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Function a(key as String = "", index as Integer) As JSON
+		  Dim child_json as JSONItem
+		  if key <> "" then
+		    child_json = Self.jsonItem.Value(key)
+		  else
+		    child_json = Self.jsonItem
+		  end if
+		  
+		  if child_json.IsArray then
+		    Dim obj as JSON = new JSON(child_json(index))
+		    return obj
+		  else
+		    Dim e As New Xojo.Data.InvalidJSONException
+		    e.Message = "This is not Array."
+		    Raise e
+		  end if
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Function b(key as String = "") As Boolean
 		  // if Self.json_boolean <> Nil then
 		  // return Self.json_boolean
@@ -60,7 +81,7 @@ Protected Class JSON
 		  Case GetTypeInfo(String)
 		    Try
 		      Self.jsonItem = new JSONItem(json)
-		    Catch
+		    Catch e as JSONException
 		      Self.json_string = json
 		    End Try
 		  Case GetTypeInfo(Double)

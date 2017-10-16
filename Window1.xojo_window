@@ -38,9 +38,11 @@ End
 		  
 		  System.DebugLog(json.o("info").s("description"))
 		  
-		  // json.paths['/pet']['post']['tags'][0]
 		  Dim childJson() as JSON = json.o("paths").o("/pet").o("post").a("tags")
-		  System.DebugLog(childJson(0).json_string)
+		  System.DebugLog(childJson(0).s())
+		  
+		  System.DebugLog(json.o("paths").o("/pet").o("post").a("tags", 0).s())
+		  
 		End Sub
 	#tag EndEvent
 
